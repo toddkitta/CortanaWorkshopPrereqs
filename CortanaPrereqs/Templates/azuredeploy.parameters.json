@@ -1,0 +1,21 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "clusterLoginUserName": {
+      "value": "cortanaadmin"
+    },
+    "clusterLoginPassword": {
+      "value": "Password.1!!"
+    },
+    "appName": {
+      "value": "kittacis"
+    },
+    "labVmUsername": {
+      "value": "cortanaadmin"
+    },
+    "labVmPassword": {
+      "value": "Password.1!!"
+    }
+  }
+}
