@@ -34,6 +34,15 @@
     <Content Include="Scripts\Deploy-AzureResourceGroup.ps1" />
     <Content Include="Templates\azuredeploy.json" />
     <Content Include="Templates\azuredeploy.parameters.json" />
+    <None Include="DSC\mydcsConfiguration.ps1" />
+    <None Include="DSC\xSystemSecurity\1.1.0.0\appveyor.yml" />
+    <None Include="DSC\xSystemSecurity\1.1.0.0\DSCResources\xIEEsc\xIEEsc.psd1" />
+    <None Include="DSC\xSystemSecurity\1.1.0.0\DSCResources\xIEEsc\xIEEsc.schema.psm1" />
+    <None Include="DSC\xSystemSecurity\1.1.0.0\DSCResources\xUAC\xUAC.psd1" />
+    <None Include="DSC\xSystemSecurity\1.1.0.0\DSCResources\xUAC\xUAC.schema.psm1" />
+    <None Include="DSC\xSystemSecurity\1.1.0.0\LICENSE" />
+    <None Include="DSC\xSystemSecurity\1.1.0.0\README.md" />
+    <None Include="DSC\xSystemSecurity\1.1.0.0\xSystemSecurity.psd1" />
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
 </Project>

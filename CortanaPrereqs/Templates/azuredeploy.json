@@ -17,17 +17,6 @@
     "clusterLoginPassword": {
       "type": "securestring"
     },
-    "clusterNodeSize": {
-      "type": "string",
-      "defaultValue": "Standard_D12_v2",
-      "allowedValues": [
-        "Standard_D12_v2"
-      ]
-    },
-    "clusterWorkerNodeCount": {
-      "type": "int",
-      "defaultValue": 2
-    },
 
     // Lab VM parms
     "labVmUsername": {
@@ -64,6 +53,10 @@
     "publicIPAddressType": "Dynamic",
     "imagePublisher": "MicrosoftWindowsServer",
     "imageOffer": "WindowsServer",
+    "clusterNodeSize": "Standard_D12_v2",
+    "clusterWorkerNodeCount": 2,
+    "mydcsConfigurationFunction": "mydcsConfiguration.ps1\\Main",
+    "dscModuleUrl": "",
 
     "clusterApiVersion": "2015-03-01-preview",
     "storageApiVersion": "2016-01-01",
@@ -200,7 +193,36 @@
             }
           ]
         }
-      }
+      },
+      "resources": [
+        {
+          "name": "mydcs",
+          "type": "extensions",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "[variables('vmApiVersion')]",
+          "dependsOn": [
+            "[concat('Microsoft.Compute/virtualMachines/', variables('labVmName'))]"
+          ],
+          "tags": {
+            "displayName": "mydcs"
+          },
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.9",
+            "autoUpgradeMinorVersion": true,
+            "settings": {
+              "modulesUrl": "[concat(parameters('_artifactsLocation'), '/', 'dsc.zip')]",
+              "sasToken": "",
+              "configurationFunction": "[variables('mydcsConfigurationFunction')]",
+              "properties": {
+                "nodeName": "[variables('labVmName')]"
+              }
+            },
+            "protectedSettings": { }
+          }
+        }
+      ]
     },
 
     // HDInsight
@@ -241,7 +263,7 @@
               "name": "headnode",
               "targetInstanceCount": "2",
               "hardwareProfile": {
-                "vmSize": "[parameters('clusterNodeSize')]"
+                "vmSize": "[variables('clusterNodeSize')]"
               },
               "osProfile": {
                 "linuxOperatingSystemProfile": {
@@ -252,9 +274,9 @@
             },
             {
               "name": "workernode",
-              "targetInstanceCount": "[parameters('clusterWorkerNodeCount')]",
+              "targetInstanceCount": "[variables('clusterWorkerNodeCount')]",
               "hardwareProfile": {
-                "vmSize": "[parameters('clusterNodeSize')]"
+                "vmSize": "[variables('clusterNodeSize')]"
               },
               "osProfile": {
                 "linuxOperatingSystemProfile": {
